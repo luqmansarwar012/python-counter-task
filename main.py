@@ -1,12 +1,12 @@
 import time
 from pynput import keyboard
+import argparse
 
-# Input a number
-num = input('Enter a number\n')
-while int(num) <= 0:
-    print("Please enter a positive number")
-    num = input()
+parser = argparse.ArgumentParser()
+parser.add_argument('--target', help = "target to display counter" )
+args = parser.parse_args()
 
+target = args.target
 # detect wether space key is pressed or not
 is_space_pressed = False
 def on_press(key):
@@ -16,12 +16,12 @@ def on_press(key):
         is_space_pressed = True
         return False
 
-listener = keyboard.Listener(on_press=on_press)
+listener = keyboard.Listener(on_press = on_press)
 listener.start()
 
 # increment every second until it equals the input
 count = 0
-while count < int(num) and (not is_space_pressed):
+while count < int(target) and (not is_space_pressed):
     count += 1
     print("Counter:", count)
     time.sleep(1)
